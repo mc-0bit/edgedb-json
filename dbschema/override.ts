@@ -75,7 +75,7 @@ export function override_User_tasks<User extends T_User | T_User[]>(
 			Override<
 				U,
 				{
-					tasks: Simplify<Task>[];
+					tasks: Simplify<A_Task>[];
 				}
 			>
 	  >[]
@@ -83,7 +83,7 @@ export function override_User_tasks<User extends T_User | T_User[]>(
 			Override<
 				User,
 				{
-					tasks: Simplify<Task>[];
+					tasks: Simplify<A_Task>[];
 				}
 			>
 	  > {
@@ -123,7 +123,7 @@ export namespace testModule {
 				Override<
 					U,
 					{
-						users: Simplify<User>[];
+						users: Simplify<A_User>[];
 					}
 				>
 		  >[]
@@ -131,7 +131,7 @@ export namespace testModule {
 				Override<
 					hasasdda,
 					{
-						users: Simplify<User>[];
+						users: Simplify<A_User>[];
 					}
 				>
 		  > {

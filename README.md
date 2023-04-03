@@ -21,11 +21,11 @@ npm install --save-dev edgedb-json
 
 Run the following command to generate the types.
 
-This will generate a `override.ts` file in the `dbschema` directory.
-
 ```
 npx edgedb-json [options]
 ```
+
+This will generate a `override.ts` file in the `dbschema` directory.
 
 By default EdgeDB-json will also run `npx @edgedb/generate interfaces`. To disable this use the `--override-only` option.
 
@@ -85,16 +85,26 @@ import { override_User_tasks } from './dbschema/override';
 	const query = e.select(e.User, () => ({
 		id: true,
 		email: true,
-		tasks: true
+		tasks: true,
 	}));
-
 	const results = await query.run(client);
-	const users = override_Module_tasks(results);
+	const users = override_User_tasks(results);
+	const user = users[0];
 
-    users[0].tasks?[0].name // string
-    users[0].tasks?[0].questions?[0].answer // number
-
-    users[0].tasks // TODO
+	user.tasks /*
+	tasks: {
+		id: string;
+		name: string;
+		description?: string | null | undefined;
+		questions?: {
+				answer: number;
+				description: string;
+				question: string;
+				name?: string | null | undefined;
+				id: string;
+		}[] | undefined;
+	}[]
+	*/
 })();
 ```
 

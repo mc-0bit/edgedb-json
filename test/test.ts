@@ -5,11 +5,27 @@ import { override_User_tasks, override_Task_questions, testModule } from '../dbs
 export const client = createClient();
 
 (async () => {
-	const query = e.select(e.testModule.hasasdda, () => ({
+	const query = e.select(e.User, () => ({
 		id: true,
-		users: true
+		email: true,
+		tasks: true,
 	}));
 	const results = await query.run(client);
-	const hasasdda = testModule.override_hasasdda_users(results);
-	const hasasdda1 = hasasdda[0];
+	const users = override_User_tasks(results);
+	const user = users[0];
+
+	user.tasks /*
+	tasks: {
+		id: string;
+		name: string;
+		description?: string | null | undefined;
+		questions?: {
+				answer: number;
+				description: string;
+				question: string;
+				name?: string | null | undefined;
+				id: string;
+		}[] | undefined;
+	}[]
+	*/
 })();

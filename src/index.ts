@@ -115,7 +115,7 @@ function createOverrideFunction(module: string, property: string, value: string,
 				Override<
 					U,
 					{
-						${property}: Simplify<${prefix}${target.name}>${isLink ? '[]' : ''};
+						${property}: Simplify<${isTargetDefaultModule ? '' : target.mod + '_'}${hasJson ? 'A_' : ''}${target.name}>${isLink ? '[]' : ''};
 					}
 				>
 		>[]
@@ -123,7 +123,7 @@ function createOverrideFunction(module: string, property: string, value: string,
 				Override<
 					${name},
 					{
-						${property}: Simplify<${prefix}${target.name}>${isLink ? '[]' : ''};
+						${property}: Simplify<${isTargetDefaultModule ? '' : target.mod + '_'}${hasJson ? 'A_' : ''}${target.name}>${isLink ? '[]' : ''};
 					}
 				>
 		> {
