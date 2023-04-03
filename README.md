@@ -114,6 +114,7 @@ Add to `edgedb.toml`
 
 ```toml
 [edgedb-json]
-module = "MyModuleName" # Module name
-annotation = "MyAnnotationName" # Annotation name
+module = "MyModuleName" # default: EDGEDB_JSON
+annotation = "MyAnnotationName" # default: JSON_TYPE
+```
 ```
