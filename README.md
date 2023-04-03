@@ -1,11 +1,11 @@
 <div align="center">
 	<h1>EdgeDB-json</h1>
 	<h3>Easy to use code generator for typing json properties in EdgeDB.</h3>
-	<a href="https://www.npmjs.com/package/edgedb-json">
+	<a href="https://github.com/mc-0bit/edgedb-json/blob/main/LICENSE">
 		<img alt="npm license" src="https://img.shields.io/npm/l/edgedb-json">
 	</a>
 	<a href="https://www.npmjs.com/package/edgedb-json">
-		<img alt="npm license" src="https://img.shields.io/npm/v/edgedb-json">
+		<img alt="npm version" src="https://img.shields.io/npm/v/edgedb-json">
 	</a>
 </div>
 
