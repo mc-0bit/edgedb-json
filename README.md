@@ -85,13 +85,13 @@ import { override_User_tasks } from './dbschema/override';
 	const query = e.select(e.User, () => ({
 		id: true,
 		email: true,
-		tasks: true,
+		tasks: true
 	}));
 	const results = await query.run(client);
 	const users = override_User_tasks(results);
 	const user = users[0];
 
-	user.tasks /*
+	user.tasks; /*
 	tasks: {
 		id: string;
 		name: string;
