@@ -30,7 +30,7 @@ This will generate a `override.ts` file in the `dbschema` directory.
 npx edgedb-json [options]
 ```
 
-By default it will also run `npx @edgedb/generate interfaces`. To disable this use the `--override-only` option.
+By default EdgeDB-json will also run `npx @edgedb/generate interfaces`. To disable this use the `--override-only` option.
 
 ## Schema
 
@@ -101,8 +101,12 @@ import { override_User_tasks } from './dbschema/override';
 })();
 ```
 
-# TODO
+## Configuration
 
-- [ ] rework string creation
-- [ ] add tests
-- [ ] generate types recursively, so that nested types do not inherit `unknown` from `interfaces.ts`
+Add to `edgedb.toml`
+
+```toml
+[edgedb-json]
+module = "MyModuleName" # Module name
+annotation = "MyAnnotationName" # Annotation name
+```
