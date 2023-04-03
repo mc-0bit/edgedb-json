@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import fs from 'fs';
 import { $, createClient } from 'edgedb';
 import prettier from 'prettier';
