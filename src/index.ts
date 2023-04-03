@@ -99,14 +99,13 @@ function createOverrideFunction(module: string, property: string, value: string,
 	}
 
 	// create type for nested properties
+	const prefix = `${hasJson ? `${isTargetDefaultModule ? '' : `${target.mod}_A_`}` : `${isTargetDefaultModule ? '' : `_${target.mod}.`}`}`;
 	typeString += `\ntype ${isOwnerDefaultModule ? '' : mod + '_'}A_${name} = Simplify<Override<
-		${isOwnerDefaultModule ? '' : '_' + mod + '.'}${name},
-			{
-				${property}${targetRequired ? '' : '?'}: Simplify<${isTargetDefaultModule ? '' : `${target.mod}_`}${hasJson ? 'A_' : ''}${target.name}>${
-		isLink ? '[]' : ''
-	};
-			}
-		>>;\n`;
+			${isOwnerDefaultModule ? '' : '_' + mod + '.'}${name},
+				{
+					${property}${targetRequired ? '' : '?'}: Simplify<${prefix}${target.name}>${isLink ? '[]' : ''};
+				}
+			>>;\n`;
 
 	// create override function
 	let output = `
@@ -116,7 +115,7 @@ function createOverrideFunction(module: string, property: string, value: string,
 				Override<
 					U,
 					{
-						${property}: Simplify<${isTargetDefaultModule ? '' : target.mod + '_'}${hasJson ? 'A_' : ''}${target.name}>${isLink ? '[]' : ''};
+						${property}: Simplify<${prefix}${target.name}>${isLink ? '[]' : ''};
 					}
 				>
 		>[]
@@ -124,7 +123,7 @@ function createOverrideFunction(module: string, property: string, value: string,
 				Override<
 					${name},
 					{
-						${property}: Simplify<${isTargetDefaultModule ? '' : target.mod + '_'}${hasJson ? 'A_' : ''}${target.name}>${isLink ? '[]' : ''};
+						${property}: Simplify<${prefix}${target.name}>${isLink ? '[]' : ''};
 					}
 				>
 		> {

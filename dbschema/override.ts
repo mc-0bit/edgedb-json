@@ -20,7 +20,7 @@ type A_User = Simplify<
 	Override<
 		User,
 		{
-			tasks: Simplify<A_Task>[];
+			tasks: Simplify<Task>[];
 		}
 	>
 >;
@@ -38,7 +38,7 @@ type testModule_A_hasasdda = Simplify<
 	Override<
 		_testModule.hasasdda,
 		{
-			users: Simplify<A_User>[];
+			users: Simplify<User>[];
 		}
 	>
 >;
@@ -75,7 +75,7 @@ export function override_User_tasks<User extends T_User | T_User[]>(
 			Override<
 				U,
 				{
-					tasks: Simplify<A_Task>[];
+					tasks: Simplify<Task>[];
 				}
 			>
 	  >[]
@@ -83,7 +83,7 @@ export function override_User_tasks<User extends T_User | T_User[]>(
 			Override<
 				User,
 				{
-					tasks: Simplify<A_Task>[];
+					tasks: Simplify<Task>[];
 				}
 			>
 	  > {
@@ -123,7 +123,7 @@ export namespace testModule {
 				Override<
 					U,
 					{
-						users: Simplify<A_User>[];
+						users: Simplify<User>[];
 					}
 				>
 		  >[]
@@ -131,7 +131,7 @@ export namespace testModule {
 				Override<
 					hasasdda,
 					{
-						users: Simplify<A_User>[];
+						users: Simplify<User>[];
 					}
 				>
 		  > {
