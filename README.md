@@ -7,9 +7,6 @@
 	<a href="https://www.npmjs.com/package/edgedb-json">
 		<img alt="npm license" src="https://img.shields.io/npm/v/edgedb-json">
 	</a>
-	<a href="https://www.npmjs.com/package/edgedb-json">
-		<img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/mc-0bit/edgedb-json/main.yml">
-	</a>
 </div>
 
 <br>
