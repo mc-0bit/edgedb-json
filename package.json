@@ -1,0 +1,45 @@
+{
+	"name": "edgedb-json",
+	"description": "Type codegen for EdgeDB json properties",
+	"version": "0.0.1",
+	"keywords": [
+		"edgedb",
+		"typescript",
+		"json",
+		"codegen"
+	],
+	"homepage": "https://github.com/mc-0bit/edgedb-json",
+	"author": "mc-0bit",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/mc-0bit/edgedb-json.git"
+	},
+	"license": "MIT",
+	"scripts": {
+		"build": "tsup src/index.ts --format cjs,esm",
+		"format": "prettier . --write .",
+		"lint": "tsc",
+		"generate": "npm run generate-interfaces && npm run generate-edgeql && npm run generate-override",
+		"generate-interfaces": "npx @edgedb/generate interfaces > NUL",
+		"generate-edgeql": "npx @edgedb/generate edgeql-js > NUL",
+		"generate-override": "npm run build > NUL && node dist/index.js",
+		"prepublishOnly": "npm run lint && npm run format && npm run build"
+	},
+	"devDependencies": {
+		"@types/node": "^18.15.11",
+		"@types/prettier": "^2.7.2",
+		"tsup": "^6.7.0",
+		"typescript": "^5.0.2"
+	},
+	"dependencies": {
+		"@edgedb/generate": "^0.0.8",
+		"edgedb": "^1.1.0",
+		"prettier": "^2.8.0",
+		"toml": "^3.0.0",
+		"type-fest": "^3.7.2"
+	},
+	"main": "dist/index.js",
+	"module": "dist/index.mjs",
+	"types": "dist/index.d.ts",
+	"bin": "dist/index.js"
+}
