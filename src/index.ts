@@ -102,8 +102,9 @@ function createOverrideFunction(module: string, property: string, value: string,
 	typeString += `\ntype ${isOwnerDefaultModule ? '' : mod + '_'}A_${name} = Simplify<Override<
 		${isOwnerDefaultModule ? '' : '_' + mod + '.'}${name},
 			{
-				${property}${targetRequired ? '' : '?'}: Simplify<${isTargetDefaultModule ? '' : `${target.mod}_`}${hasJson ? 'A_' : ''}${target.name}>
-				${isLink ? '[]' : ''};
+				${property}${targetRequired ? '' : '?'}: Simplify<${isTargetDefaultModule ? '' : `${target.mod}_`}${hasJson ? 'A_' : ''}${target.name}>${
+		isLink ? '[]' : ''
+	};
 			}
 		>>;\n`;
 

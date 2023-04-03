@@ -11,8 +11,7 @@ type A_Task = Simplify<
 	Override<
 		Task,
 		{
-			questions?: Simplify<Questions>;
-			[];
+			questions?: Simplify<Questions>[];
 		}
 	>
 >;
@@ -21,8 +20,7 @@ type A_User = Simplify<
 	Override<
 		User,
 		{
-			tasks: Simplify<A_Task>;
-			[];
+			tasks: Simplify<A_Task>[];
 		}
 	>
 >;
@@ -31,8 +29,7 @@ type A_test0 = Simplify<
 	Override<
 		test0,
 		{
-			hasasdda: Simplify<testModule_A_hasasdda>;
-			[];
+			hasasdda: Simplify<testModule_A_hasasdda>[];
 		}
 	>
 >;
@@ -41,8 +38,7 @@ type testModule_A_hasasdda = Simplify<
 	Override<
 		_testModule.hasasdda,
 		{
-			users: Simplify<A_User>;
-			[];
+			users: Simplify<A_User>[];
 		}
 	>
 >;
