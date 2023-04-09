@@ -117,4 +117,7 @@ Add to `edgedb.toml`
 module = "MyModuleName" # default: EDGEDB_JSON
 annotation = "MyAnnotationName" # default: JSON_TYPE
 ```
+
+```
+
 ```

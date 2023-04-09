@@ -99,11 +99,16 @@ function createOverrideFunction(module: string, property: string, value: string,
 	}
 
 	// create type for nested properties
-	const prefix = `${hasJson ? `${isTargetDefaultModule ? '' : `${target.mod}_A_`}` : `${isTargetDefaultModule ? '' : `_${target.mod}.`}`}`;
+	const typePrefix = `${
+		hasJson ? `${isTargetDefaultModule ? '' : `${target.mod}_A_`}` : `${isTargetDefaultModule ? '' : `_${target.mod}.`}`
+	}`;
+	const overridePrefix = `${
+		hasJson ? `${isTargetDefaultModule ? '' : `${target.mod}_`}A_` : `${isTargetDefaultModule ? '' : `_${target.mod}.`}`
+	}`;
 	typeString += `\ntype ${isOwnerDefaultModule ? '' : mod + '_'}A_${name} = Simplify<Override<
 			${isOwnerDefaultModule ? '' : '_' + mod + '.'}${name},
 				{
-					${property}${targetRequired ? '' : '?'}: Simplify<${prefix}${target.name}>${isLink ? '[]' : ''};
+					${property}${targetRequired ? '' : '?'}: Simplify<${typePrefix}${target.name}>${isLink ? '[]' : ''};
 				}
 			>>;\n`;
 
@@ -115,7 +120,7 @@ function createOverrideFunction(module: string, property: string, value: string,
 				Override<
 					U,
 					{
-						${property}: Simplify<${isTargetDefaultModule ? '' : target.mod + '_'}${hasJson ? 'A_' : ''}${target.name}>${isLink ? '[]' : ''};
+						${property}: Simplify<${overridePrefix}${target.name}>${isLink ? '[]' : ''};
 					}
 				>
 		>[]
@@ -123,7 +128,7 @@ function createOverrideFunction(module: string, property: string, value: string,
 				Override<
 					${name},
 					{
-						${property}: Simplify<${isTargetDefaultModule ? '' : target.mod + '_'}${hasJson ? 'A_' : ''}${target.name}>${isLink ? '[]' : ''};
+						${property}: Simplify<${overridePrefix}${target.name}>${isLink ? '[]' : ''};
 					}
 				>
 		> {
