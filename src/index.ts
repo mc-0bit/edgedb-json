@@ -107,7 +107,14 @@ function createOverrideFunction(module: string, property: string, value: string,
 				{
 					${property}${targetRequired ? '' : '?'}: ${isObject ? `{ [${target.name}: string]: ` : ''} Simplify<${typePrefix}${target.name}>${isObject ? ` }` : ''}${isLink ? '[]' : ''};
 				}
-			>>;\n`;
+			>>;\n
+		
+			\ntype Object_${isOwnerDefaultModule ? '' : mod + '_'}A_${name} = Simplify<Override<
+			${isOwnerDefaultModule ? '' : '_' + mod + '.'}${name},
+				{
+					${property}${targetRequired ? '' : '?'}: ${isObject ? `{ [${target.name}: string]: ` : ''} Simplify<${overridePrefix}${target.name}>${isObject ? ` }` : ''}${isLink ? '[]' : ''};
+				}
+			>>;\n	`;
 
 	// create override function
 	let output = `
@@ -117,7 +124,9 @@ function createOverrideFunction(module: string, property: string, value: string,
 				Override<
 					U,
 					{
-						${property}: ${isObject ? `{ [${target.name}: string]: ` : ''} Simplify<${overridePrefix}${target.name}>${isObject ? ` }` : ''}${isLink ? '[]' : ''};
+						${property}: ${isObject ? `{ [${target.name}: string]: ` : ''} Simplify<${isObject && hasJson ? 'Object_' : ''}${overridePrefix}${target.name}>${isObject ? ` }` : ''}${
+		isLink ? '[]' : ''
+	};
 					}
 				>
 		>[]
@@ -125,12 +134,27 @@ function createOverrideFunction(module: string, property: string, value: string,
 				Override<
 					${name},
 					{
-						${property}: ${isObject ? `{ [${target.name}: string]: ` : ''} Simplify<${overridePrefix}${target.name}>${isObject ? ` }` : ''}${isLink ? '[]' : ''};
+						${property}: ${isObject ? `{ [${target.name}: string]: ` : ''} Simplify<${isObject && hasJson ? 'Object_' : ''}${overridePrefix}${target.name}>${isObject ? ` }` : ''}${
+		isLink ? '[]' : ''
+	};
 					}
 				>
 		> {
-		// @ts-ignore
-		return _${name};
+		const resultArray: ${name}[] = [];
+		if (Array.isArray(_${name})) {
+			for (const _${name}Item of _${name}) {
+				_${name}Item.progress = JSON.parse(_${name}Item.progress);
+				// @ts-ignore
+				resultArray.push(_${name}Item);
+			}
+			// @ts-ignore
+			return resultArray;
+		} else {
+			// @ts-ignore
+			_${name}.progress = JSON.parse(_${name}.progress);
+			// @ts-ignore
+			return _${name};
+		}
 	}\n`;
 	return output;
 }
