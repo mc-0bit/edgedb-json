@@ -140,21 +140,8 @@ function createOverrideFunction(module: string, property: string, value: string,
 					}
 				>
 		> {
-		const resultArray: ${name}[] = [];
-		if (Array.isArray(_${name})) {
-			for (const _${name}Item of _${name}) {
-				_${name}Item.progress = JSON.parse(_${name}Item.progress);
-				// @ts-ignore
-				resultArray.push(_${name}Item);
-			}
-			// @ts-ignore
-			return resultArray;
-		} else {
-			// @ts-ignore
-			_${name}.progress = JSON.parse(_${name}.progress);
-			// @ts-ignore
-			return _${name};
-		}
+		// @ts-ignore
+		return _${name};
 	}\n`;
 	return output;
 }

@@ -1,7 +1,7 @@
 {
 	"name": "edgedb-json",
 	"description": "Type codegen for EdgeDB json properties",
-	"version": "0.1.8",
+	"version": "0.1.9",
 	"keywords": [
 		"edgedb",
 		"typescript",
