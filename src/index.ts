@@ -105,7 +105,7 @@ function createOverrideFunction(module: string, property: string, value: string,
 	typeString += `\ntype ${isOwnerDefaultModule ? '' : mod + '_'}A_${name} = Simplify<Override<
 			${isOwnerDefaultModule ? '' : '_' + mod + '.'}${name},
 				{
-					${property}${targetRequired ? '' : '?'}: Simplify<${typePrefix}${target.name}>${isLink ? '[]' : ''};
+					${property}${targetRequired ? '' : '?'}: ${isObject ? `{ [${target.name}: string]: ` : ''} Simplify<${typePrefix}${target.name}>${isObject ? ` }` : ''}${isLink ? '[]' : ''};
 				}
 			>>;\n`;
 
@@ -117,7 +117,7 @@ function createOverrideFunction(module: string, property: string, value: string,
 				Override<
 					U,
 					{
-						${property}: ${isObject ? `{ [${target.name}]: ` : ''} Simplify<${overridePrefix}${target.name}>${isObject ? ` }` : ''}${isLink ? '[]' : ''};
+						${property}: ${isObject ? `{ [${target.name}: string]: ` : ''} Simplify<${overridePrefix}${target.name}>${isObject ? ` }` : ''}${isLink ? '[]' : ''};
 					}
 				>
 		>[]
@@ -125,7 +125,7 @@ function createOverrideFunction(module: string, property: string, value: string,
 				Override<
 					${name},
 					{
-						${property}: ${isObject ? `{ [${target.name}]: ` : ''} Simplify<${overridePrefix}${target.name}>${isObject ? ` }` : ''}${isLink ? '[]' : ''};
+						${property}: ${isObject ? `{ [${target.name}: string]: ` : ''} Simplify<${overridePrefix}${target.name}>${isObject ? ` }` : ''}${isLink ? '[]' : ''};
 					}
 				>
 		> {
