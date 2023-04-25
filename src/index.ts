@@ -57,6 +57,7 @@ const annnotatedModules: {
 			[property: string]: {
 				value: string;
 				isLink: boolean;
+				isObject: boolean;
 				required: boolean;
 			};
 		};
@@ -73,7 +74,7 @@ const allModules: {
 	};
 } = {};
 
-function createOverrideFunction(module: string, property: string, value: string, isLink: boolean) {
+function createOverrideFunction(module: string, property: string, value: string, isLink: boolean, isObject: boolean) {
 	const { mod, name } = $.util.splitName(module);
 	const target = $.util.splitName(value);
 
@@ -99,12 +100,8 @@ function createOverrideFunction(module: string, property: string, value: string,
 	}
 
 	// create type for nested properties
-	const typePrefix = `${
-		hasJson ? `${isTargetDefaultModule ? '' : `${target.mod}_A_`}` : `${isTargetDefaultModule ? '' : `_${target.mod}.`}`
-	}`;
-	const overridePrefix = `${
-		hasJson ? `${isTargetDefaultModule ? '' : `${target.mod}_`}A_` : `${isTargetDefaultModule ? '' : `_${target.mod}.`}`
-	}`;
+	const typePrefix = `${hasJson ? `${isTargetDefaultModule ? '' : `${target.mod}_A_`}` : `${isTargetDefaultModule ? '' : `_${target.mod}.`}`}`;
+	const overridePrefix = `${hasJson ? `${isTargetDefaultModule ? '' : `${target.mod}_`}A_` : `${isTargetDefaultModule ? '' : `_${target.mod}.`}`}`;
 	typeString += `\ntype ${isOwnerDefaultModule ? '' : mod + '_'}A_${name} = Simplify<Override<
 			${isOwnerDefaultModule ? '' : '_' + mod + '.'}${name},
 				{
@@ -120,7 +117,7 @@ function createOverrideFunction(module: string, property: string, value: string,
 				Override<
 					U,
 					{
-						${property}: Simplify<${overridePrefix}${target.name}>${isLink ? '[]' : ''};
+						${property}: ${isObject ? `{ [${target.name}]: ` : ''} Simplify<${overridePrefix}${target.name}>${isObject ? ` }` : ''}${isLink ? '[]' : ''};
 					}
 				>
 		>[]
@@ -128,7 +125,7 @@ function createOverrideFunction(module: string, property: string, value: string,
 				Override<
 					${name},
 					{
-						${property}: Simplify<${overridePrefix}${target.name}>${isLink ? '[]' : ''};
+						${property}: ${isObject ? `{ [${target.name}]: ` : ''} Simplify<${overridePrefix}${target.name}>${isObject ? ` }` : ''}${isLink ? '[]' : ''};
 					}
 				>
 		> {
@@ -201,7 +198,8 @@ function createOverrideFunction(module: string, property: string, value: string,
 			for (const annotation of annotations) {
 				let value = annotation['@value'];
 				const isLink = value.endsWith('[]');
-				if (isLink) {
+				const isObject = value.endsWith('{}');
+				if (isLink || isObject) {
 					value = value.slice(0, -2);
 				}
 
@@ -214,6 +212,7 @@ function createOverrideFunction(module: string, property: string, value: string,
 				annnotatedModules[$.util.splitName(moduleName).mod][$.util.splitName(moduleName).name][name] = {
 					value,
 					isLink,
+					isObject,
 					required: property.required
 				};
 			}
@@ -225,8 +224,8 @@ function createOverrideFunction(module: string, property: string, value: string,
 		if (module !== 'default') overrideFunctionString += `export namespace ${module} {\n`;
 		for (const type in annnotatedModules[module]) {
 			for (const property in annnotatedModules[module][type]) {
-				const { value, isLink } = annnotatedModules[module][type][property];
-				overrideFunctionString += createOverrideFunction(module + '::' + type, property, value, isLink);
+				const { value, isLink, isObject } = annnotatedModules[module][type][property];
+				overrideFunctionString += createOverrideFunction(module + '::' + type, property, value, isLink, isObject);
 			}
 		}
 		if (module !== 'default') overrideFunctionString += `}\n`;
